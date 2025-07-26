@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multi-Level Patience Puzzle</title>
+  <style>
+    :root {
+  --bg: linear-gradient(135deg, #fdfbfb, #ebedee);
+  --text: #222;
+  --tile-bg: #ffffff;
+  --border: #444;
+  --btn-bg: #4caf50;
+  --btn-text: white;
+}
+
+.dark {
+  --bg: linear-gradient(135deg, #1f1f1f, #2b2b2b);
+  --text: #f0f0f0;
+  --tile-bg: #333;
+  --border: #777;
+  --btn-bg: #03a9f4;
+  --btn-text: white;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 10px 0 20px;
+  color: #ff4081;
+}
+
+select, button {
+  padding: 10px 16px;
+  margin: 5px;
+  font-size: 1rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  filter: brightness(1.2);
+}
+
+#board {
+  display: grid;
+  gap: 5px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 10px;
+  background: var(--tile-bg);
+  color: white;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+}
+
+.tile.empty {
+  background: transparent;
+  border: 2px dashed var(--border);
+  color: transparent;
+  cursor: default;
+}
+
+.tile:not(.empty):nth-child(4n+1) { background: #ff5252; }
+.tile:not(.empty):nth-child(4n+2) { background: #ff9800; }
+.tile:not(.empty):nth-child(4n+3) { background: #4caf50; }
+.tile:not(.empty):nth-child(4n+4) { background: #2196f3; }
+
+#controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#leaderboard {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #aaa;
+}
+
+.entry {
+  font-size: 0.95rem;
+  margin: 4px 0;
+}
+
+.toggle-theme {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #673ab7;
+}
+
+#howToPlayModal {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  background: white;
+  color: black;
+  border: 2px solid #03a9f4;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+   :root {
+  --bg: linear-gradient(135deg, #fdfbfb, #ebedee);
+  --text: #222;
+  --tile-bg: #ffffff;
+  --border: #444;
+  --btn-bg: #4caf50;
+  --btn-text: white;
+}
+
+.dark {
+  --bg: linear-gradient(135deg, #1f1f1f, #2b2b2b);
+  --text: #f0f0f0;
+  --tile-bg: #333;
+  --border: #777;
+  --btn-bg: #03a9f4;
+  --btn-text: white;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+h1 {
+  font-size: 5vw;
+  margin: 10px 0;
+  color: #ff4081;
+}
+
+select, button {
+  padding: 2vw 4vw;
+  margin: 5px;
+  font-size: 1rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+#board {
+  display: grid;
+  gap: 1vw;
+  margin: 5vw auto;
+  justify-content: center;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(4vw + 4px);
+  font-weight: bold;
+  border-radius: 10px;
+  background: var(--tile-bg);
+  color: white;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+  width: 18vw;
+  height: 18vw;
+  max-width: 90px;
+  max-height: 90px;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+}
+
+.tile.empty {
+  background: transparent;
+  border: 2px dashed var(--border);
+  color: transparent;
+  cursor: default;
+}
+
+.tile:not(.empty):nth-child(4n+1) { background: #ff5252; }
+.tile:not(.empty):nth-child(4n+2) { background: #ff9800; }
+.tile:not(.empty):nth-child(4n+3) { background: #4caf50; }
+.tile:not(.empty):nth-child(4n+4) { background: #2196f3; }
+
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+#leaderboard {
+  margin-top: 5vw;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4vw;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #aaa;
+}
+
+.entry {
+  font-size: 1rem;
+  margin: 0.5vw 0;
+}
+
+.toggle-theme {
+  position: absolute;
+  top: 1vw;
+  right: 2vw;
+  padding: 1vw 2vw;
+  font-size: 1rem;
+  background: #673ab7;
+  color: white;
+}
+
+#howToPlayModal {
+  display: none;
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -15%);
+  background: white;
+  color: black;
+  border: 2px solid #03a9f4;
+  padding: 5vw;
+  border-radius: 8px;
+  max-width: 90vw;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  z-index: 1000;
+  font-size: 1rem;
+}
+
+  </style>
+</head>
+<body>
+  <button class="toggle-theme" onclick="toggleTheme()">🌙</button>
+  <h1>🧩 Patience Puzzle</h1>
+
+  <div id="levelSelector">
+    <label for="level">Select Level:</label>
+    <select id="level" onchange="setLevel(this.value)">
+      <option value="3">🟩 Easy (3x3)</option>
+      <option value="4" selected>🟦 Medium (4x4)</option>
+      <option value="5">🟥 Hard (5x5)</option>
+    </select>
+    <button onclick="showHowToPlay()">❓ How to Play</button>
+  </div>
+
+  <div id="board"></div>
+
+  <div id="controls">
+    <button onclick="shuffle()">🔀 Shuffle</button>
+    <span id="moves">Moves: 0</span>
+    <span id="timer">Time: 0s</span>
+  </div>
+
+  <div id="leaderboard">
+    <h2>🏆 Leaderboard</h2>
+    <div id="topScores"></div>
+  </div>
+
+  <!-- How to Play Modal -->
+  <div id="howToPlayModal">
+    <h2>❓ How to Play</h2>
+    <p>This is a classic sliding tile puzzle.</p>
+    <ul>
+      <li>🧠 Your goal is to arrange the numbered tiles in order (1 to N).</li>
+      <li>🟦 One tile is missing (the empty slot). Click a tile next to it to slide it.</li>
+      <li>🔀 Use the Shuffle button to begin a random puzzle.</li>
+      <li>🏆 Try to solve the puzzle in the fewest moves and shortest time.</li>
+      <li>📊 Your top scores are saved per level.</li>
+    </ul>
+    <button onclick="closeHowToPlay()">OK, Got It!</button>
+  </div>
+
+  <script>
+    const board = document.getElementById("board");
+    const movesSpan = document.getElementById("moves");
+    const timerSpan = document.getElementById("timer");
+    const topScoresDiv = document.getElementById("topScores");
+    const howToPlayModal = document.getElementById("howToPlayModal");
+
+    let levelSize = 4;
+    let tiles = [], moveCount = 0, timer = 0, interval;
+
+    function setLevel(size) {
+      levelSize = parseInt(size);
+      init();
+    }
+
+    function init() {
+      const total = levelSize * levelSize;
+      tiles = [...Array(total - 1).keys()].map(i => i + 1).concat(null);
+      board.style.gridTemplateColumns = `repeat(${levelSize}, ${Math.floor(300 / levelSize)}px)`;
+      board.style.gridTemplateRows = `repeat(${levelSize}, ${Math.floor(300 / levelSize)}px)`;
+      render();
+      resetStats();
+      showLeaderboard();
+    }
+
+    function render() {
+      board.innerHTML = '';
+      tiles.forEach((value, i) => {
+        const tile = document.createElement("div");
+        tile.className = "tile" + (value === null ? " empty" : "");
+        tile.textContent = value || "";
+        tile.style.width = tile.style.height = `${Math.floor(300 / levelSize)}px`;
+        tile.addEventListener("click", () => moveTile(i));
+        board.appendChild(tile);
+      });
+    }
+
+    function moveTile(index) {
+      const emptyIndex = tiles.indexOf(null);
+      const row = i => Math.floor(i / levelSize);
+      const col = i => i % levelSize;
+      if ((Math.abs(row(index) - row(emptyIndex)) + Math.abs(col(index) - col(emptyIndex))) === 1) {
+        [tiles[emptyIndex], tiles[index]] = [tiles[index], tiles[emptyIndex]];
+        moveCount++;
+        movesSpan.textContent = `Moves: ${moveCount}`;
+        render();
+        checkWin();
+      }
+    }
+
+    function shuffle() {
+      const total = levelSize * levelSize;
+      do {
+        tiles = [...Array(total - 1).keys()].map(i => i + 1).concat(null);
+        for (let i = tiles.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+        }
+      } while (!isSolvable(tiles));
+
+      moveCount = 0;
+      timer = 0;
+      movesSpan.textContent = "Moves: 0";
+      timerSpan.textContent = "Time: 0s";
+      clearInterval(interval);
+      interval = setInterval(() => {
+        timer++;
+        timerSpan.textContent = `Time: ${timer}s`;
+      }, 1000);
+      render();
+    }
+
+    function isSolvable(arr) {
+      const list = arr.filter(x => x !== null);
+      let inv = 0;
+      for (let i = 0; i < list.length - 1; i++) {
+        for (let j = i + 1; j < list.length; j++) {
+          if (list[i] > list[j]) inv++;
+        }
+      }
+      const rowFromBottom = levelSize - Math.floor(arr.indexOf(null) / levelSize);
+      return levelSize % 2 === 1 ? inv % 2 === 0 : (rowFromBottom % 2 === 0) !== (inv % 2 === 0);
+    }
+
+    function checkWin() {
+      const win = tiles.slice(0, tiles.length - 1).every((v, i) => v === i + 1) && tiles[tiles.length - 1] === null;
+      if (win) {
+        clearInterval(interval);
+        setTimeout(() => {
+          alert(`🎉 Solved in ${moveCount} moves & ${timer} seconds!`);
+          saveScore(moveCount, timer);
+        }, 100);
+      }
+    }
+
+    function resetStats() {
+      moveCount = 0;
+      timer = 0;
+      movesSpan.textContent = "Moves: 0";
+      timerSpan.textContent = "Time: 0s";
+      clearInterval(interval);
+    }
+
+    function saveScore(moves, time) {
+      const key = `puzzleScores_${levelSize}`;
+      const entry = { moves, time };
+      const scores = JSON.parse(localStorage.getItem(key) || "[]");
+      scores.push(entry);
+      scores.sort((a, b) => (a.moves - b.moves) || (a.time - b.time));
+      localStorage.setItem(key, JSON.stringify(scores.slice(0, 5)));
+      showLeaderboard();
+    }
+
+    function showLeaderboard() {
+      const key = `puzzleScores_${levelSize}`;
+      const scores = JSON.parse(localStorage.getItem(key) || "[]");
+      topScoresDiv.innerHTML = scores.map((s, i) =>
+        `<div class="entry">#${i + 1}: 🧠 ${s.moves} moves, ⏱️ ${s.time}s</div>`
+      ).join("") || "No scores yet.";
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+
+    function showHowToPlay() {
+      howToPlayModal.style.display = "block";
+    }
+
+    function closeHowToPlay() {
+      howToPlayModal.style.display = "none";
+    }
+
+    init();
+  </script>
+</body>
+</html>
